@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { SessionService } from '../service/session.service';
 
 @Component({
   selector: 'app-tab-groups',
@@ -7,6 +8,14 @@ import { Component } from '@angular/core';
 })
 export class TabGroupsPage {
 
-  constructor() {}
+  private loggedIn: boolean;
 
+  constructor(
+    private sessionService: SessionService
+  ) {}
+
+  async ionViewWillEnter() {
+    console.log('Groups tab: will enter');
+    this.loggedIn = await this.sessionService.isLoggedIn();
+  }
 }

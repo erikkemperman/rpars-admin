@@ -13,5 +13,10 @@
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Measure page"></app-explore-container>
+  <div *ngIf="!loggedIn">
+    Please log in on the Profile tab
+  </div>
+  <div *ngIf="loggedIn">
+    You are logged in
+  </div>
 </ion-content>

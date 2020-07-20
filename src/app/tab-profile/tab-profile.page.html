@@ -13,5 +13,77 @@
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Profile page"></app-explore-container>
+  <ion-list *ngIf="!loggedIn">
+    <ion-list-header>
+      <ion-label>Account</ion-label>
+    </ion-list-header>
+
+    <ion-item>
+      You are not logged in, please submit credentials:
+    </ion-item>
+
+    <form (ngSubmit)="loginSubmit()">
+
+      <ion-item>
+        <ion-input
+          name="email"
+          [(ngModel)]="loginEmail"
+          type="email"
+          placeholder="E-mail address">
+        </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input
+          name="password"
+          [(ngModel)]="loginPassword"
+          type="password"
+          placeholder="Password">
+        </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-button type="submit" block>Login</ion-button>
+      </ion-item>
+    </form>
+  </ion-list>
+
+  <ion-list *ngIf="loggedIn">
+    <ion-list-header>
+      <ion-label>Account</ion-label>
+    </ion-list-header>
+
+    <ion-item>
+      You are succesfully logged in!
+    </ion-item>
+
+    <form (ngSubmit)="logoutSubmit()">
+      <ion-item>
+        <ion-input
+          disabled
+          name="email"
+          [(ngModel)]="loginEmail"
+          type="email"
+          placeholder="email address"
+          autcomplete="off">
+        </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input
+          disabled
+          name="password"
+          [(ngModel)]="loginPassword"
+          type="password"
+          placeholder="password"
+          autcomplete="off">
+        </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-button type="submit" block>Logout</ion-button>
+      </ion-item>
+    </form>
+  </ion-list>
+
 </ion-content>

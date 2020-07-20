@@ -16,7 +16,7 @@ export class AppComponent {
   isDark: boolean;
 
   constructor(
-    private platform: Platform
+    private platform: Platform,
   ) {
     this.initializeApp();
   }
@@ -41,4 +41,6 @@ export class AppComponent {
 
     });
   }
+
+
 }
