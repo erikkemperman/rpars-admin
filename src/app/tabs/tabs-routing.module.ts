@@ -12,12 +12,12 @@ const routes: Routes = [
         loadChildren: () => import('../tab-profile/tab-profile.module').then(m => m.TabProfilePageModule)
       },
       {
-        path: 'tab-measure',
-        loadChildren: () => import('../tab-measure/tab-measure.module').then(m => m.TabMeasurePageModule)
+        path: 'tab-groups',
+        loadChildren: () => import('../tab-groups/tab-groups.module').then(m => m.TabGroupsPageModule)
       },
       {
-        path: 'tab3',
-        loadChildren: () => import('../tab3/tab3.module').then(m => m.Tab3PageModule)
+        path: 'tab-edit',
+        loadChildren: () => import('../tab-edit/tab-edit.module').then(m => m.TabEditPageModule)
       },
       {
         path: '',

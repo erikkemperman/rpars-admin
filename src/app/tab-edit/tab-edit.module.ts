@@ -3,10 +3,10 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { TabMeasurePage } from './tab-measure.page';
+import { TabEditPage } from './tab-edit.page';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 
-import { TabMeasurePageRoutingModule } from './tab-measure-routing.module';
+import { TabEditPageRoutingModule } from './tab-edit-routing.module'
 
 @NgModule({
   imports: [
@@ -14,8 +14,9 @@ import { TabMeasurePageRoutingModule } from './tab-measure-routing.module';
     CommonModule,
     FormsModule,
     ExploreContainerComponentModule,
-    TabMeasurePageRoutingModule
+    RouterModule.forChild([{ path: '', component: TabEditPage }]),
+    TabEditPageRoutingModule,
   ],
-  declarations: [TabMeasurePage]
+  declarations: [TabEditPage]
 })
-export class TabMeasurePageModule {}
+export class TabEditPageModule {}
