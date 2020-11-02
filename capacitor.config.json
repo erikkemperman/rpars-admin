@@ -1,0 +1,13 @@
+{
+  "appId": "nl.rsm.rsec.rpars_admin",
+  "appName": "RPARS",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {}
+}
