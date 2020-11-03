@@ -32,7 +32,8 @@ export type SessionLoginFiniRequest = {
 export type SessionLoginFiniResponse = {
   server_proof: string,
   session_id: string,
-  expiration: number
+  expiration: number,
+  admin: boolean
 }
 
 export type SessionLogoutRequest = {

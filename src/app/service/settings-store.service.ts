@@ -8,7 +8,8 @@ const KEY_PREFIX = 'settings.';
 export enum SettingsKey {
   USER_CREDENTIALS = 'credentials',
   SESSION_ID = 'session_id',
-  SESSION_EXPIRATION = 'session_expiration'
+  SESSION_EXPIRATION = 'session_expiration',
+  ADMIN = 'admin'
 }
 
 
@@ -17,12 +18,9 @@ export enum SettingsKey {
 })
 export class SettingsStoreService {
 
-  private secure: boolean;
-
   constructor(
   ) {
     //console.debug('settings store service ctor');
-    this.secure = undefined;
   }
 
   async fetch<T>(key: SettingsKey): Promise<T> {
@@ -61,5 +59,13 @@ export class SettingsStoreService {
 
   async storeSessionExpiration(sessionExpiration: number): Promise<void> {
     return await this.store(SettingsKey.SESSION_EXPIRATION, sessionExpiration.toString());
+  }
+
+  async fetchAdmin(): Promise<boolean> {
+    return await this.fetch(SettingsKey.ADMIN);
+  }
+
+  async storeAdmin(admin: boolean): Promise<void> {
+    return await this.store(SettingsKey.ADMIN, admin);
   }
 }

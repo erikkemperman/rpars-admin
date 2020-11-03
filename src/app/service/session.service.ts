@@ -178,6 +178,7 @@ export class SessionService {
     // Validate return values
     const serverProof = finiResponse.server_proof;
     const sessionId = finiResponse.session_id;
+    const admin = finiResponse.admin;
     if (typeof serverProof !== 'string'
     || serverProof.length !== Constants.NONCE_LENGTH * 2
     || !HEX_REX.test(serverProof)) {
@@ -188,6 +189,9 @@ export class SessionService {
     || !HEX_REX.test(sessionId)) {
       throw new Error(`Bad server response to init message: illegal sessionId`);
     }
+    if (typeof admin !== 'boolean') {
+      throw new Error(`Bad server response to init message: illegal admin flag`);
+    }
 
     // Verify server proof
     const serverKey = this.bytesToHex(await this.hmac(passwordHash, 'Server Key'));
@@ -196,8 +200,14 @@ export class SessionService {
       throw new Error(`Bad server response to fini message: invalid server proof`);
     }
 
-    // Save session id
+    // Check we have admin privilege
+    if (admin !== true) {
+      throw new Error(`Error: this account has no administrator privileges`);
+    }
+
+    // Save session id and admin flag
     await this.settingsStoreService.storeSessionId(sessionId);
+    await this.settingsStoreService.storeAdmin(admin);
 
 
     return sessionId;
