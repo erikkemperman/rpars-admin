@@ -42,6 +42,66 @@ export type SessionLogoutRequest = {
 export type SessionLogoutResponse = {
 }
 
+export type MemberGetRequest = {
+}
+
+export type MemberGetResponse = {
+  project_id: number,
+  project_name: string,
+  group_id: number,
+  group_name: string
+}
+
+export type MemberGetProjectRequest = {
+}
+
+export type MemberGetProjectResponse = {
+  project_id: number,
+  project_name: string
+}[]
+
+export type MemberGetGroupRequest = {
+  project_id: number
+}
+
+export type MemberGetGroupResponse = {
+  group_id: number,
+  group_name: string
+}[]
+
+export type MemberGetUserRequest = {
+  group_id: number
+}
+
+export type MemberGetUserResponse = {
+  user_id: number,
+  user_email: string
+}[];
+
+export type MemberGetUnassignedUserRequest = {
+}
+
+export type MemberGetUnassignedUserResponse = {
+  user_id: number,
+  user_email: string
+}[];
+
+
+export type MemberAddUsersRequest = {
+  group_id: number,
+  user_ids: number[]
+}
+
+export type MemberAddUsersResponse = {
+}
+
+export type MemberRemoveUserRequest = {
+  user_id: number
+}
+
+export type MemberRemoveUserResponse = {
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -110,6 +170,34 @@ export class ApiService {
 
   async sessionLogout(params: SessionLogoutRequest): Promise<SessionLogoutResponse> {
     return await this.post('session_logout', params);
+  }
+
+  async memberGet(params: MemberGetRequest): Promise<MemberGetResponse> {
+    return await this.post('member_get', params);
+  }
+
+  async memberGetProject(params: MemberGetProjectRequest): Promise<MemberGetProjectResponse> {
+    return await this.post('member_project_get', params);
+  }
+
+  async memberGetGroup(params: MemberGetGroupRequest): Promise<MemberGetGroupResponse> {
+    return await this.post('member_group_get', params);
+  }
+
+  async memberGetUser(params: MemberGetUserRequest): Promise<MemberGetUserResponse> {
+    return await this.post('member_user_get', params);
+  }
+
+  async memberGetUnassignedUser(params: MemberGetUnassignedUserRequest): Promise<MemberGetUnassignedUserResponse> {
+    return await this.post('member_user_unassigned_get', params);
+  }
+
+  async memberAddUsers(params: MemberAddUsersRequest): Promise<MemberAddUsersResponse> {
+    return await this.post('member_add_users', params);
+  }
+
+  async removeUser(params: MemberRemoveUserRequest): Promise<MemberRemoveUserResponse> {
+    return await this.post('member_remove_user', params);
   }
 
 }

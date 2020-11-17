@@ -30,11 +30,11 @@ export class AppComponent {
       console.log('isDark', this.isDark);
 
       if (this.isMobile) {
-        if (this.isDark) {
-          await StatusBar.setStyle({ style: StatusBarStyle.Dark });
-        } else {
-          await StatusBar.setStyle({ style: StatusBarStyle.Light });
-        }
+        // if (this.isDark) {
+        //   await StatusBar.setStyle({ style: StatusBarStyle.Dark });
+        // } else {
+        //   await StatusBar.setStyle({ style: StatusBarStyle.Light });
+        // }
         await StatusBar.show();
       }
       await SplashScreen.hide();

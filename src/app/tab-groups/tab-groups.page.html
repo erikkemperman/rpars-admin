@@ -17,6 +17,48 @@
     Please log in on the Profile tab
   </div>
   <div *ngIf="loggedIn">
-    You are logged in
+    <ion-list style="width: 100%" lines="full">
+      <ng-container *ngFor="let project of members">
+        <ion-item>
+          <ion-label position="stacked">
+            Project #{{project.project_id}} <b>{{project.project_name}}</b>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-list style="width: 100%" >
+            <ng-container *ngFor="let group of project.project_members">
+              <ion-item>
+                <ion-label position="stacked">
+                  Group #{{group.group_id}} <b>{{group.group_name}}</b>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-list style="width: 100%">
+                  <ion-item *ngFor="let user of group.group_members">
+                    <ion-label position="stacked">
+                      User #{{user.user_id}} <b>{{user.user_email}}</b>
+                    </ion-label>
+                    <ion-button slot="end" fill="none" (click)="removeUser(project, group, user)">
+                      <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+                    </ion-button>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label position="stacked">
+                      <i>Add a user to group <b>{{group.group_name}}</b>:</i>
+                    </ion-label>
+                    <ion-select multiple="true"
+                      (ionChange)="addUser(group.group_id, $event.detail.value)">
+                      <ion-select-option *ngFor="let user of unassigned" value="{{user.user_id}}">
+                        User #{{user.user_id}} {{user.user_email}}
+                      </ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                </ion-list>
+              </ion-item>
+            </ng-container>
+          </ion-list>
+        </ion-item>
+      </ng-container>
+    </ion-list>
   </div>
 </ion-content>
