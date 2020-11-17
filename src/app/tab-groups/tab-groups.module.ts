@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TabGroupsPage } from './tab-groups.page';
-import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 
 import { TabGroupsPageRoutingModule } from './tab-groups-routing.module';
 
@@ -13,7 +12,7 @@ import { TabGroupsPageRoutingModule } from './tab-groups-routing.module';
     IonicModule,
     CommonModule,
     FormsModule,
-    ExploreContainerComponentModule,
+    RouterModule.forChild([{ path: '', component: TabGroupsPage }]),
     TabGroupsPageRoutingModule
   ],
   declarations: [TabGroupsPage]

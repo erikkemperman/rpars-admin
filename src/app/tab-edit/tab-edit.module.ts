@@ -3,9 +3,10 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { TabEditPage } from './tab-edit.page';
-import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 
+import { AceEditorModule } from 'ng2-ace-editor';
+
+import { TabEditPage } from './tab-edit.page';
 import { TabEditPageRoutingModule } from './tab-edit-routing.module'
 
 @NgModule({
@@ -13,7 +14,7 @@ import { TabEditPageRoutingModule } from './tab-edit-routing.module'
     IonicModule,
     CommonModule,
     FormsModule,
-    ExploreContainerComponentModule,
+    AceEditorModule,
     RouterModule.forChild([{ path: '', component: TabEditPage }]),
     TabEditPageRoutingModule,
   ],
