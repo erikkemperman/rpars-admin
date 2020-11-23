@@ -13,9 +13,9 @@ import { Constants } from '../../environments/environment';
 })
 export class TabProfilePage {
 
-  private loggedIn: boolean;
-  private loginEmail: string;
-  private loginPassword: string;
+  loggedIn: boolean;
+  loginEmail: string;
+  loginPassword: string;
 
   constructor(
     private loadingController: LoadingController,

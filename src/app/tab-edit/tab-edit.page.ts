@@ -14,12 +14,12 @@ import { Constants } from '../../environments/environment';
 })
 export class TabEditPage {
 
-  private loggedIn: boolean = false;
-  private members: Project[] = [];
-  private project: Project | null = null;
-  private group: Group | null = null;
+  loggedIn: boolean = false;
+  members: Project[] = [];
+  project: Project | null = null;
+  group: Group | null = null;
 
-  private source = "// Hello world\n"
+  source = "// Hello world\n"
   + "\n"
   + "if (isMember(user, 'test_group_A') {\n"
   + "  showDialog('Hello member of group A');\n"
@@ -95,11 +95,20 @@ export class TabEditPage {
   }
 
   async setProject(project_str: string) {
-    console.log(project_str);
     const project_id: number = parseInt(project_str);
     for (const project of this.members) {
       if (project.project_id === project_id) {
         this.project = project;
+        break
+      }
+    }
+  }
+
+  async setGroup(group_str: string) {
+    const group_id: number = parseInt(group_str);
+    for (const group of this.project.project_members) {
+      if (group.group_id === group_id) {
+        this.group = group;
         break
       }
     }

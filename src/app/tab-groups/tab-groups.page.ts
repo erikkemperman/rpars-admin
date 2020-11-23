@@ -14,9 +14,9 @@ import { Constants } from '../../environments/environment';
 })
 export class TabGroupsPage {
 
-  private loggedIn: boolean;
-  private members: Project[] = [];
-  private unassigned: User[] = [];
+  loggedIn: boolean;
+  members: Project[] = [];
+  unassigned: User[] = [];
 
   constructor(
     private alertController: AlertController,

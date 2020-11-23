@@ -9,8 +9,8 @@ export const environment = {
 };
 
 export class Constants {
-  static readonly API_URL_BASE: string = 'http://localhost:8080/api/';
-  //static readonly API_URL_BASE: string = 'https://rpars.eur.nl/api/';
+  //static readonly API_URL_BASE: string = 'http://localhost:8080/api/';
+  static readonly API_URL_BASE: string = 'https://rpars.eur.nl/api/';
   static readonly HTTP_RETRY_LIMIT: number = 5;
   static readonly HTTP_SERVER_DOWN_SLEEP: number = 15; // seconds
   static readonly HASH_SALT: string = '-=#ShouldDoTheTrick666#=-';
