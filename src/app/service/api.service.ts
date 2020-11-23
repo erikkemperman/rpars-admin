@@ -141,13 +141,16 @@ export class ApiService {
       } catch (err) {
 
         // If server is down or busy, retry a couple of times
-        if (err.status === 0 || err.status === 429) {
+        if (err.status === 0 || err.status === 429 || err.status === 503) {
           if (err.status === 0) {
             err.statusText = 'It looks like the server is down';
             wait = Constants.HTTP_SERVER_DOWN_SLEEP;
           } else if (err.status === 429) {
             err.statusText = 'The server is too busy at the moment';
             wait = parseInt(await err.headers.get('Retry-After')) + 1;
+          } else if (err.status === 503) {
+            err.statusText = 'The server was just restarted, please retry';
+            wait = 15;
           }
           if (attempts > 0) {
             console.log(`Server busy or down, try again in ${wait} seconds`);
