@@ -33,7 +33,9 @@ export type SessionLoginFiniResponse = {
   server_proof: string,
   session_id: string,
   expiration: number,
-  admin: boolean
+  admin: boolean,
+  group_id: number,
+  group_name: string
 }
 
 export type SessionLogoutRequest = {
@@ -102,6 +104,36 @@ export type MemberRemoveUserRequest = {
 export type MemberRemoveUserResponse = {
 }
 
+export type ScriptGetRequest = {
+}
+
+export type ScriptGetResponse = {
+  script_id: number,
+  locked: boolean,
+  source: string
+}
+
+export type ScriptGetGroupRequest = {
+  group_id: number
+}
+
+export type ScriptGetGroupResponse = {
+  script_id: number,
+  locked: boolean,
+  source: string
+}
+
+export type ScriptPutRequest = {
+  script_id: number,
+  locked: boolean,
+  source: string
+}
+
+export type ScriptPutResponse = {
+  status: string,
+  errors: string[]
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -127,14 +159,18 @@ export class ApiService {
           }
         ).toPromise();
         // Update expiration
+        let sessionExpiration;
         if (response.expiration) {
-          let sessionExpiration = response.expiration || -1;
+          sessionExpiration = response.expiration || -1;
           if (typeof sessionExpiration !== 'number'
           || Math.round(sessionExpiration) !== sessionExpiration
           || sessionExpiration < 0) {
             throw new Error(`Bad server response: illegal session expiration`);
           }
           sessionExpiration += Date.now();
+          await this.settingsStoreService.storeSessionExpiration(sessionExpiration);
+        } else {
+          sessionExpiration = Date.now() + Constants.SESSION_EXPIRATION;
           await this.settingsStoreService.storeSessionExpiration(sessionExpiration);
         }
         return response;
@@ -203,4 +239,15 @@ export class ApiService {
     return await this.post('member_remove_user', params);
   }
 
+  async getScript(params: ScriptGetRequest): Promise<ScriptGetResponse> {
+    return await this.post('script_get', params);
+  }
+
+  async getGroupScript(params: ScriptGetGroupRequest): Promise<ScriptGetGroupResponse> {
+    return await this.post('script_group_get', params);
+  }
+
+  async putScript(params: ScriptPutRequest): Promise<ScriptPutResponse> {
+    return await this.post('script_put', params);
+  }
 }

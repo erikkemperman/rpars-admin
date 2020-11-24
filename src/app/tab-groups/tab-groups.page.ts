@@ -18,6 +18,8 @@ export class TabGroupsPage {
   members: Project[] = [];
   unassigned: User[] = [];
 
+  private checker = null;
+
   constructor(
     private alertController: AlertController,
     private loadingController: LoadingController,
@@ -26,8 +28,26 @@ export class TabGroupsPage {
     private memberService: MemberService
   ) {}
 
+  ngOnInit() {
+    console.log('Groups tab: ngOnInit');
+  }
+
   async ionViewWillEnter() {
     console.log('Groups tab: will enter');
+    await this.checkStatus();
+    this.checker = setInterval(async () => { await this.checkStatus(); }, Constants.PERIOD_REENTER);
+  }
+
+  async ionViewWillLeave() {
+    console.log('Groups tab: will leave');
+    if (this.checker) {
+      clearInterval(this.checker);
+    }
+  }
+
+
+  async checkStatus() {
+    console.log('Groups tab: check status');
     this.loggedIn = await this.sessionService.isLoggedIn();
     await this.refreshMembers();
   }
@@ -43,6 +63,8 @@ export class TabGroupsPage {
       await loading.present();
 
       this.members = [];
+      this.unassigned = [];
+
       try {
         this.members = await this.memberService.getMembers();
         console.log('Loaded members:', this.members);
@@ -58,7 +80,6 @@ export class TabGroupsPage {
         return false;
       }
 
-      this.unassigned = [];
       try {
         this.unassigned = await this.memberService.getUnassignedUsers();
         console.log('Unassigned users:', this.unassigned);
@@ -77,7 +98,6 @@ export class TabGroupsPage {
       loading.dismiss();
 
       return true;
-
     }
   }
 

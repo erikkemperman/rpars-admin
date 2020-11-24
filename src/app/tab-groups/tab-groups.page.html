@@ -19,19 +19,16 @@
   <div *ngIf="loggedIn">
     <ion-list style="width: 100%" lines="full">
       <ng-container *ngFor="let project of members">
-        <ion-item>
-          <ion-label position="stacked">
-            Project #{{project.project_id}} <b>{{project.project_name}}</b>
-          </ion-label>
-        </ion-item>
+        <ion-list-header>
+          <ion-label>Project #{{project.project_id}} <b>{{project.project_name}}</b></ion-label>
+        </ion-list-header>
         <ion-item>
           <ion-list style="width: 100%" >
             <ng-container *ngFor="let group of project.project_members">
-              <ion-item>
-                <ion-label position="stacked">
-                  Group #{{group.group_id}} <b>{{group.group_name}}</b>
-                </ion-label>
-              </ion-item>
+
+              <ion-list-header>
+                <ion-label>Group #{{group.group_id}} <b>{{group.group_name}}</b></ion-label>
+              </ion-list-header>
               <ion-item>
                 <ion-list style="width: 100%">
                   <ion-item *ngFor="let user of group.group_members">
@@ -42,14 +39,14 @@
                       <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
                     </ion-button>
                   </ion-item>
-                  <ion-item>
+                  <ion-item [disabled]="unassigned.length === 0">
                     <ion-label position="stacked">
                       <i>Add a user to group <b>{{group.group_name}}</b>:</i>
                     </ion-label>
                     <ion-select multiple="true"
                       (ionChange)="addUser(group.group_id, $event.detail.value)">
                       <ion-select-option *ngFor="let user of unassigned" value="{{user.user_id}}">
-                        User #{{user.user_id}} {{user.user_email}}
+                        User #{{user.user_id}} <b>{{user.user_email}}</b>
                       </ion-select-option>
                     </ion-select>
                   </ion-item>

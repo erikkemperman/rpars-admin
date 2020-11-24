@@ -21,31 +21,36 @@
     <ion-grid>
       <ion-row>
         <ion-col size="4">
-          <ion-label>Select project</ion-label>
-          <ion-select multiple="false"
+          <ion-select multiple="false" [disabled]="members.length === 0"
+            placeholder="Select project and group"
             (ionChange)="setProject($event.detail.value)">
             <ion-select-option *ngFor="let project of members" value="{{project.project_id}}">
-              Project #{{project.project_id}} <b>{{project.project_name}}</b>
+              {{project.project_name}}
             </ion-select-option>
+
           </ion-select>
-          <ion-label>Select group</ion-label>
-          <ion-select multiple="false"
+          <ion-select multiple="false" [disabled]="project_id === -1"
+            placeholder="Select group"
             (ionChange)="setGroup($event.detail.value)">
-            <ion-select-option value="*">
+            <!-- <ion-select-option value="*">
               <i>All groups in project <b>{{project.project_name}}</b></i>
-            </ion-select-option>
-            <ion-select-option *ngFor="let group of project.project_members" value="{{group.group_id}}">
-              Group #{{group.group_id}} <b>{{group.group_name}}</b>
+            </ion-select-option> -->
+            <ion-select-option *ngFor="let group of (project && project.project_members) || []" value="{{group.group_id}}">
+              {{group.group_name}}
             </ion-select-option>
           </ion-select>
-          <ion-label>Locked</ion-label>&nbsp;&nbsp;<ion-checkbox></ion-checkbox>
 
         </ion-col>
 
 
         <ion-col size="8">
-          <ace-editor [text]='source' theme="monokai" mode="typescript" style=" min-height: 480px; width=80%; overflow: auto;"></ace-editor>
-          <ion-button>Revert</ion-button><ion-button>Save</ion-button>
+          <ace-editor [(text)]='source' [readOnly]="locked" theme="monokai" mode="typescript" style=" min-height: 480px; overflow: auto;"></ace-editor>
+          <ion-item>
+            <ion-label>Locked</ion-label>
+            <ion-checkbox [disabled]="group_id === -1" [(ngModel)]="locked"></ion-checkbox>
+          </ion-item>
+          <ion-button [disabled]='group_id === -1 || !script || (source === script.source && locked === script.locked)' (click)="revertScript()">Revert</ion-button>
+          <ion-button [disabled]='group_id === -1 || !script || (source === script.source && locked === script.locked)' (click)="saveScript()">Save</ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>

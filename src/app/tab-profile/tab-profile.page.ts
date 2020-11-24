@@ -17,6 +17,8 @@ export class TabProfilePage {
   loginEmail: string;
   loginPassword: string;
 
+  private checker = null;
+
   constructor(
     private loadingController: LoadingController,
     private toastController: ToastController,
@@ -25,10 +27,26 @@ export class TabProfilePage {
     this.loggedIn = false;
   }
 
-
+  ngOnInit() {
+    console.log('Profile tab: ngOnInit');
+  }
 
   async ionViewWillEnter() {
     console.log('Profile tab: will enter');
+    await this.checkStatus();
+    this.checker = setInterval(async () => { await this.checkStatus(); }, Constants.PERIOD_REENTER);
+  }
+
+  async ionViewWillLeave() {
+    console.log('Profile tab: will leave');
+    if (this.checker) {
+      clearInterval(this.checker);
+    }
+  }
+
+
+  async checkStatus() {
+    console.log('Profile tab: check status');
     this.loggedIn = await this.sessionService.isLoggedIn();
     if (!this.loggedIn && (!this.loginEmail || !this.loginPassword)) {
       this.loginEmail = '';
@@ -38,12 +56,6 @@ export class TabProfilePage {
       //   this.loggedIn = await this.sessionService.isLoggedIn();
       // }
     }
-  }
-
-  async ionViewWillLeave() {
-    console.log('Profile tab: will leave');
-    // this.loginEmail = '';
-    // this.loginPassword = '';
   }
 
   async loginSubmit(): Promise<boolean> {
